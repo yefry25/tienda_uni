@@ -12,8 +12,17 @@ def create_app():
     app.mysql_connection = create_mysql_connection(app.config)
 
     # Registro de rutas (controladores)
-    from app.controllers.userController import bp as user_controller
+    from controllers.userController import bp as user_controller
+    from controllers.clotheController import bp as clothe_controller
+    from controllers.paymentTypeController import bp as paymentType_controller
+    from controllers.billController import bp as bill_controller
+    from controllers.shippingController import bp as shipping_controller
+
     app.register_blueprint(user_controller)
+    app.register_blueprint(clothe_controller)
+    app.register_blueprint(paymentType_controller)
+    app.register_blueprint(bill_controller)
+    app.register_blueprint(shipping_controller)
 
     return app
 

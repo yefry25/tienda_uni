@@ -1,14 +1,14 @@
 from flask import current_app
 from datetime import datetime
 from decimal import Decimal
-from app.models.user import User  # Asegúrate de importar tu clase
+from models.user import User  # Asegúrate de importar tu clase
 
 # Servicio para crear un nuevo usuario en la base de datos
 def create_user(data):
     try:
         # Convertir los datos recibidos en un objeto User
         user = User(
-            id=None,  # Asumimos que la base de datos genera el id automáticamente
+            id=None,
             nombres=data['nombres'],
             apellidos=data['apellidos'],
             usuario=data['usuario'],
@@ -44,7 +44,7 @@ def get_users():
         cursor = connection.cursor()
 
         # Consulta SQL para seleccionar todos los usuarios
-        select_query = "SELECT * FROM usuarios"  # Asegúrate de que el nombre de la tabla sea correcto
+        select_query = "SELECT * FROM usuarios"
         cursor.execute(select_query)
 
         # Obtener todos los resultados
