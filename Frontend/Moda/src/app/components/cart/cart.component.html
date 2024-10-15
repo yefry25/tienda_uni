@@ -1,0 +1,24 @@
+<div class="container">
+    <h2>Tu Carrito de Compras</h2>
+    <div *ngIf="cartItems.length === 0">
+        <p>No hay productos en tu carrito.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let item of cartItems">
+            <div class="card mb-4">
+                <img [src]="item.Imagen" class="card-img-top" width="450" height="500" alt="{{ item.Marca }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.Marca }}</h5>
+                    <p class="card-text">Precio: {{ item.Valor }} USD</p>
+                    <button class="btn btn-danger" (click)="removeFromCart(item.IdOrden)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p>Total del valor: {{ totalValue() | currency:'COP':true }}</p>
+            <button class="btn btn-success">Finalizar compra</button>
+        </div>
+    </div>
+</div>

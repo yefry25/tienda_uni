@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>Iniciar Sesión</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nick">Nick</label>
+      <input type="text" id="userName" [(ngModel)]="credentials.userName" name="userName" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" [(ngModel)]="credentials.password" name="password" class="form-control"
+        required>
+    </div>
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+  </form>
+</div>

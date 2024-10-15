@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let registro of registros">
+        <div class="card mb-4">
+            <img [src]="registro.imagen" class="card-img-top" width="450" height="500" alt="{{ registro.descripcion }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ registro.marca }}</h5>
+            <p class="card-text">{{ registro.descripcion }}</p>
+            <button (click)="addToCart(registro.id)" class="btn btn-success">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
