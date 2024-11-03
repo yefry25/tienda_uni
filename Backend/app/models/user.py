@@ -1,16 +1,14 @@
 from datetime import datetime
-from decimal import Decimal
 
 class User:
-    def __init__(self, id: int, nombres: str, apellidos: str, usuario: str, correo: str,fecha_nacimiento: datetime, total_compras: Decimal, direccion: str, numero_telefonico: str, password: str, estado: bool):
+    def __init__(self, id: int, firstName: str, lastName: str, nickName: str, password: str, email: str, address: str, phoneNumber: str, creationDate: datetime, active: bool):
         self.id = id
-        self.nombres = nombres
-        self.apellidos = apellidos
-        self.usuario = usuario
-        self.correo = correo
-        self.fecha_nacimiento = fecha_nacimiento
-        self.total_compras = total_compras
-        self.direccion = direccion
-        self.numero_telefonico = numero_telefonico
+        self.firstName = firstName
+        self.lastName = lastName
+        self.nickName = nickName
         self.password = password
-        self.estado = estado
+        self.email = email
+        self.address = address
+        self.phoneNumber = phoneNumber
+        self.creationDate = creationDate
+        self.active = active

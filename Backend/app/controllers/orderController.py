@@ -1,22 +1,23 @@
 from flask import Blueprint, request, jsonify
 
-bp = Blueprint('order_controller', __name__)
+bp = Blueprint('OrderController', __name__)
 
 @bp.route('/createOrder', methods=['POST'])
-def add_user():
-    from app.services.orderService import create_order
+def CreateOrder():
+    from app.Services.OrderService import CreateOrder
     data = request.json
-    result, statusCode = create_order(data)
+
+    result, statusCode = CreateOrder(data)
     return jsonify(result), statusCode
 
 @bp.route('/orders', methods=["GET"])
 def get_users():
-    from app.services.orderService import get_orders
+    from app.Services.OrderService import get_orders
     result, statusCode = get_orders()
     return jsonify(result), statusCode
 
 @bp.route('/orderDetail/<int:idUsuario>', methods=["GET"])
 def update_user(idUsuario):
-    from app.services.orderService import getOrderDetailByUserId
+    from app.Services.OrderService import getOrderDetailByUserId
     result, statusCode = getOrderDetailByUserId(idUsuario)
     return jsonify(result), statusCode

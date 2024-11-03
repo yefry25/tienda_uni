@@ -1,8 +1,10 @@
 from datetime import datetime;
+from decimal import Decimal
 
 class Order():
-    def __init__(self, Id: int = None, IdUsuario: int = None, IdPrenda:int = None, FechaCreacion: datetime = None):
+    def __init__(self, Id: int = None, UserId: int = None, CreationDate: datetime = None, statusId:int = None, total = Decimal):
         self.Id = Id
-        self.IdUsuario = IdUsuario
-        self.IdPrenda = IdPrenda
-        self.FechaCreacion = FechaCreacion
+        self.UserId = UserId
+        self.CreationDate = CreationDate
+        self.statusId = statusId
+        self.total = total

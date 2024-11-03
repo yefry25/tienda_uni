@@ -1,7 +1,7 @@
 from flask import current_app
 from datetime import datetime
 from decimal import Decimal
-from app.models.user import User  # Asegúrate de importar tu clase
+from app.Models.User import User  # Asegúrate de importar tu clase
 
 # Servicio para crear un nuevo usuario en la base de datos
 def create_user(data):
@@ -38,7 +38,7 @@ def create_user(data):
         print(f"Error al insertar usuario: {e}")
         return {'message': 'Error al crear el usuario'}
 
-def get_users():
+def GetUsers():
     try:
         connection = current_app.mysql_connection
         cursor = connection.cursor()
@@ -142,14 +142,14 @@ def update_user(user_id, data):
         print(f"Error al actualizar usuario: {e}")
         return {'message': 'Error al actualizar el usuario'}, 500
     
-def login(userName: str, password: str):
+def Login(userName: str, password: str):
     try:
         # Conexión a la base de datos
         connection = current_app.mysql_connection
         cursor = connection.cursor(dictionary=True)
 
         # Consulta SQL para seleccionar el usuario por nombre de usuario
-        select_query = "SELECT * FROM usuarios WHERE usuario = %s"
+        select_query = "SELECT * FROM usuarios WHERE nick = %s"
         cursor.execute(select_query, (userName,))
         
         # Obtener el usuario
