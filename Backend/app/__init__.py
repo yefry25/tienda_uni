@@ -19,15 +19,13 @@ def create_app():
     from app.Controllers.UserController import bp as UserController
     from app.Controllers.ProductController import bp as ProductController
     from app.Controllers.paymentTypeController import bp as paymentType_controller
-    from app.Controllers.billController import bp as bill_controller
-    from app.Controllers.shippingController import bp as shipping_controller
+    from app.Controllers.BillController import bp as BillController
     from app.Controllers.OrderController import bp as OrderController
 
     app.register_blueprint(UserController)
     app.register_blueprint(ProductController)
     app.register_blueprint(paymentType_controller)
-    app.register_blueprint(bill_controller)
-    app.register_blueprint(shipping_controller)
+    app.register_blueprint(BillController)
     app.register_blueprint(OrderController)
 
     return app

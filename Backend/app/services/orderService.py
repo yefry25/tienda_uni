@@ -108,7 +108,7 @@ def getOrderDetailByUserId(idUsuario: int):
         FROM ordenes orden
         JOIN items_orden item ON orden.id = item.idOrden
         JOIN productos producto ON item.idProducto = producto.id
-        WHERE orden.idUsuario = %s
+        WHERE orden.idUsuario = %s AND orden.idEstado = 2
         GROUP BY producto.id, producto.nombre, producto.descripcion, orden.total
         """
         cursor.execute(select_query, (idUsuario,))

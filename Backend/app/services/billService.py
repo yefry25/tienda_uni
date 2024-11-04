@@ -1,23 +1,13 @@
 from flask import current_app
-from decimal import Decimal
-from app.models.bill import Bill
 
-def create_bill(data):
+def CreateBill(data):
     try:
-        bill = Bill(
-            Id=None,
-            IdOrden=data['idOrden'],
-            MontoTotal=data['montoTotal'],
-        )
-
         connection = current_app.mysql_connection
         cursor = connection.cursor()
 
         # Consulta SQL para insertar una factura
-        insert_query = """INSERT INTO factura
-                          (IdOrden, MontoTotal) 
-                          VALUES (%s, %s)"""
-        cursor.execute(insert_query, (bill.IdOrden, bill.MontoTotal))
+        insert_query = "CALL CrearFactura(%s, %s)"
+        cursor.execute(insert_query, (data['OrderId'], data['UserId']))
 
         connection.commit()  # Guarda los cambios
         cursor.close()
