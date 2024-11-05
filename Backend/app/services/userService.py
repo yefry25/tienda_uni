@@ -4,39 +4,40 @@ from decimal import Decimal
 from app.Models.User import User  # Asegúrate de importar tu clase
 
 # Servicio para crear un nuevo usuario en la base de datos
-def create_user(data):
+def CreateUser(userData):
     try:
         # Convertir los datos recibidos en un objeto User
         user = User(
             id=None,
-            nombres=data['nombres'],
-            apellidos=data['apellidos'],
-            usuario=data['usuario'],
-            fecha_nacimiento=datetime.strptime(data['fecha_nacimiento'], '%Y-%m-%d'),
-            total_compras=Decimal(data['total_compras']),
-            direccion=data['direccion'],
-            numero_telefonico=data['numero_telefonico'],
-            password=data['password'],
-            estado=data['estado']   
+            firstName=userData['FirstName'],
+            lastName=userData['LastName'],
+            nickName=userData['NickName'],
+            password=userData['Password'],
+            email=userData['Email'],
+            address=userData['Address'],
+            phoneNumber=str(userData['PhoneNumber']),
+            creationDate=None,
+            active=userData['Active']
         )
 
         connection = current_app.mysql_connection
         cursor = connection.cursor()
 
         # Consulta SQL para insertar un nuevo usuario
-        insert_query = """INSERT INTO usuarios
-                          (nombres, apellidos, usuario, fecha_nacimiento, total_compras, direccion, numero_telefonico, password, estado) 
-                          VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-        cursor.execute(insert_query, (user.nombres, user.apellidos, user.usuario, user.fecha_nacimiento, user.total_compras, user.direccion, user.numero_telefonico, user.password, user.estado))
-
+        insert_query = """
+        INSERT INTO usuarios
+            (nombres, apellidos, nick, password, correo, direccion, telefono, activo) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(insert_query, (user.firstName, user.lastName, user.nickName, user.password, user.email, user.address, user.phoneNumber, user.active))
         connection.commit()  # Guarda los cambios
         cursor.close()
 
-        return {'message': 'Usuario creado exitosamente'}
+        return {'message': 'Usuario creado exitosamente'}, 201
 
     except Exception as e:
         print(f"Error al insertar usuario: {e}")
-        return {'message': 'Error al crear el usuario'}
+        return {'message': 'Error al crear el usuario'}, 500
 
 def GetUsers():
     try:

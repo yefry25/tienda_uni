@@ -18,15 +18,15 @@ def create_app():
     # Registro de rutas (controladores)
     from app.Controllers.UserController import bp as UserController
     from app.Controllers.ProductController import bp as ProductController
-    from app.Controllers.paymentTypeController import bp as paymentType_controller
     from app.Controllers.BillController import bp as BillController
     from app.Controllers.OrderController import bp as OrderController
+    from app.Controllers.ReportController import bp as ReportController
 
     app.register_blueprint(UserController)
     app.register_blueprint(ProductController)
-    app.register_blueprint(paymentType_controller)
     app.register_blueprint(BillController)
     app.register_blueprint(OrderController)
+    app.register_blueprint(ReportController)
 
     return app
 

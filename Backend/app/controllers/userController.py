@@ -3,10 +3,11 @@ from flask import Blueprint, request, jsonify
 bp = Blueprint('UserController', __name__)
 
 @bp.route('/createUser', methods=["POST"])
-def add_user():
-    from app.Services.UserService import create_user
-    data = request.json
-    result, statusCode = create_user(data)
+def AddUser():
+    from app.Services.UserService import CreateUser
+    userData = request.json
+
+    result, statusCode = CreateUser(userData)
     return jsonify(result), statusCode
 
 @bp.route('/users', methods=["GET"])
