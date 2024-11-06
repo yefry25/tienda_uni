@@ -40,12 +40,21 @@ def SaleByProduct():
 
         cursor.close()  # Cierra el cursor
 
-        return saleList, 200 # Devuelve la lista de productos vendidos
+        result = {
+            'items': saleList,
+            'columns': [
+                {'header': 'Producto', 'field': 'Product'},
+                {'header': 'Cantidad Vendida', 'field': 'AmountSold'},
+                {'header': 'Ingresos Totales', 'field': 'TotalIncome'}
+            ]
+        }
+
+        return result, 200 # Devuelve la lista de productos vendidos
     except Exception as e:
         print(f"Error al obtener los productos: {e}")
         return {'message': 'Error al obtener los productos'}, 500
 
-def saleByCategory():
+def SaleByCategory():
     try:
         connection = current_app.mysql_connection
         cursor = connection.cursor()
@@ -87,7 +96,16 @@ def saleByCategory():
 
         cursor.close()  # Cierra el cursor
 
-        return saleList, 200 # Devuelve la lista de productos vendidos
+        result = {
+            'items': saleList,
+            'columns': [
+                {'header': 'Categoría', 'field': 'Category'},
+                {'header': 'Cantidad Vendida', 'field': 'AmountSold'},
+                {'header': 'Ingresos Totales', 'field': 'TotalIncome'}
+            ]
+        }
+
+        return result, 200 # Devuelve la lista de productos vendidos
 
     except Exception as e:
         print(f"Error al obtener los productos por categoria: {e}")
@@ -118,18 +136,26 @@ def StatusOfUsers():
         for row in userStatus:
             userStatusList.append({
                 'Status': row[0],                  
-                'TotalUsers': row[1]
+                'UserTotal': row[1]
             })
 
         cursor.close()  # Cierra el cursor
 
-        return userStatusList, 200
+        result = {
+            'items': userStatusList,
+            'columns':[
+                {'header': 'Estado', 'field': 'Status'},
+                {'header': 'Total de usuarios', 'field': 'UserTotal'}
+            ]
+        }
+
+        return result, 200
 
     except Exception as e:
         print(f"Error al obtener el estado de los usuarios: {e}")
         return {'message': 'Error al obtener el estado de los usuarios'}, 500
 
-def salesForUsers():
+def SalesForUsers():
     try:
         connection = current_app.mysql_connection
         cursor = connection.cursor()
@@ -160,12 +186,21 @@ def salesForUsers():
             saleList.append({
                 'NickName': row[0],                  
                 'OrderNumber': row[1],             
-                'TotalSpend': row[2]
+                'SpendTotal': row[2]
             })
 
         cursor.close()  # Cierra el cursor
 
-        return saleList, 200
+        result = {
+            'items': saleList,
+            'columns':[
+                {'header': 'Usuario', 'field': 'NickName'},
+                {'header': 'Número de orden', 'field': 'OrderNumber'},
+                {'header': 'Total gastado', 'field': 'SpendTotal'}
+            ]
+        }
+
+        return result, 200
 
     except Exception as e:
         print(f"Error: {e}")
@@ -196,12 +231,20 @@ def ProductInventory():
         for row in products:
             productList.append({
                 'Product': row[0],                  
-                'Inventario': row[1]
+                'Inventary': row[1]
             })
 
         cursor.close()  # Cierra el cursor
 
-        return productList, 200
+        result = {
+            'items': productList,
+            'columns':[
+                {'header': 'Producto', 'field': 'Product'},
+                {'header': 'Inventario', 'field': 'Inventary'}
+            ]
+        }
+
+        return result, 200
 
     except Exception as e:
         print(f"Error: {e}")
@@ -239,7 +282,15 @@ def OrderStatus():
 
         cursor.close()  # Cierra el cursor
 
-        return orderList, 200
+        result = {
+            'items': orderList,
+            'columns':[
+                {'header': 'Estado', 'field': 'Status'},
+                {'header': 'Número de orden', 'field': 'OrderNumber'}
+            ]
+        }
+
+        return result, 200
 
     except Exception as e:
         print(f"Error: {e}")
@@ -283,7 +334,17 @@ def IssuedBills():
 
         cursor.close()  # Cierra el cursor
 
-        return billList, 200
+        result = {
+            'items': billList,
+            'columns':[
+                {'header': 'Id de factura', 'field': 'BillId'},
+                {'header': 'Usuario', 'field': 'NickName'},
+                {'header': 'Fecha emision', 'field': 'IssuedDate'},
+                {'header': 'Total', 'field': 'Total'}
+            ]
+        }
+
+        return result, 200
 
     except Exception as e:
         print(f"Error: {e}")
@@ -321,7 +382,15 @@ def MonthlyIncome():
 
         cursor.close()  # Cierra el cursor
 
-        return incomeList, 200
+        result = {
+            'items': incomeList,
+            'columns':[
+                {'header': 'Mes', 'field': 'Month'},
+                {'header': 'Ingresos Totales', 'field': 'TotalIncome'}
+            ]
+        }
+
+        return result, 200
 
     except Exception as e:
         print(f"Error: {e}")
