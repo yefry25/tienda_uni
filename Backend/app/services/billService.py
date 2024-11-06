@@ -1,8 +1,8 @@
-from flask import current_app
+from app import get_db_connection
 
 def CreateBill(data):
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para insertar una factura
@@ -17,9 +17,13 @@ def CreateBill(data):
         print(f"Error al crear la factura: {e}")
         return {'message': 'Error al crear la factura'}, 500
     
+    finally:
+        if cursor:
+            cursor.close()
+    
 def get_bills():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para seleccionar todas las facturas
@@ -46,3 +50,7 @@ def get_bills():
     except Exception as e:
         print(f"Error al obtener las facturas: {e}")
         return {'message': 'Error al obtener las facturas'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()

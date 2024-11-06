@@ -1,8 +1,8 @@
-from flask import current_app
+from app import get_db_connection
 
 def CreateOrder(data):
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         result, statusCode = GetOrderByUserId(data['UserId'])
@@ -36,10 +36,14 @@ def CreateOrder(data):
     except Exception as e:
         print(f"Error al crear la orden: {e}")
         return {'message': 'Error al crear la orden'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
   
 def get_orders():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para seleccionar todas las ordenes
@@ -66,10 +70,14 @@ def get_orders():
     except Exception as e:
         print(f"Error al obtener las ordenes: {e}")
         return {'message': 'Error al obtener las ordenes'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def GetOrderByUserId(userId: int):
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor(dictionary = True)
 
         select_query = """
@@ -86,10 +94,14 @@ def GetOrderByUserId(userId: int):
     except Exception as e:
         print(f"Error al obtener el detalle de la orden: {e}")
         return {'message': 'Error al obtener el detalle de la orden'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def getOrderDetailByUserId(idUsuario: int):
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para seleccionar las órdenes junto con la información de la prenda
@@ -138,11 +150,14 @@ def getOrderDetailByUserId(idUsuario: int):
         print(f"Error al obtener las ordenes: {e}")
         return {'message': 'Error al obtener las ordenes'}, 500
     
+    finally:
+        if cursor:
+            cursor.close()
+    
 def UpdateOrder(orderId: int):
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
-
 
         select_query = "SELECT * FROM Orden"
         cursor.execute(select_query)
@@ -150,8 +165,11 @@ def UpdateOrder(orderId: int):
         # Obtener todos los resultados
         orders = cursor.fetchall()
 
-
         TimeoutError
     except Exception as e:
         print(f"Error al crear la orden: {e}")
         return {'message': 'Error al crear la orden'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()

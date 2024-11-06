@@ -1,7 +1,7 @@
-from flask import current_app
 from datetime import datetime
 from decimal import Decimal
 from app.Models.User import User  # Asegúrate de importar tu clase
+from app import get_db_connection
 
 # Servicio para crear un nuevo usuario en la base de datos
 def CreateUser(userData):
@@ -20,7 +20,7 @@ def CreateUser(userData):
             active=userData['Active']
         )
 
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para insertar un nuevo usuario
@@ -38,10 +38,14 @@ def CreateUser(userData):
     except Exception as e:
         print(f"Error al insertar usuario: {e}")
         return {'message': 'Error al crear el usuario'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def GetUsers():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para seleccionar todos los usuarios
@@ -75,6 +79,10 @@ def GetUsers():
     except Exception as e:
         print(f"Error al obtener usuarios: {e}")
         return {'message': 'Error al obtener los usuarios'}
+    
+    finally:
+        if cursor:
+            cursor.close()
     
 def update_user(user_id, data):
     try:
@@ -132,7 +140,7 @@ def update_user(user_id, data):
         update_values.append(user_id)
 
         # Ejecuta la consulta
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
         cursor.execute(update_query, update_values)
         connection.commit()
@@ -143,11 +151,15 @@ def update_user(user_id, data):
         print(f"Error al actualizar usuario: {e}")
         return {'message': 'Error al actualizar el usuario'}, 500
     
+    finally:
+        if cursor:
+            cursor.close()
+    
 def Login(userName: str, password: str):
     try:
         # Conexión a la base de datos
-        connection = current_app.mysql_connection
-        cursor = connection.cursor(dictionary=True)
+        connection = get_db_connection()
+        cursor = connection.cursor(dictionary = True)
 
         # Consulta SQL para seleccionar el usuario por nombre de usuario
         select_query = "SELECT * FROM usuarios WHERE nick = %s"
@@ -172,3 +184,7 @@ def Login(userName: str, password: str):
     except Exception as e:
         print(f"Error al iniciar sesión: {e}")
         return {'message': 'Error al iniciar sesión'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()

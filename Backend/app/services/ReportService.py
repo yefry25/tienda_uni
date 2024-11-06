@@ -1,8 +1,8 @@
-from flask import current_app
+from app import get_db_connection
 
 def SaleByProduct():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para seleccionar todas las facturas
@@ -53,10 +53,14 @@ def SaleByProduct():
     except Exception as e:
         print(f"Error al obtener los productos: {e}")
         return {'message': 'Error al obtener los productos'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def SaleByCategory():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         selected_query = """
@@ -110,10 +114,14 @@ def SaleByCategory():
     except Exception as e:
         print(f"Error al obtener los productos por categoria: {e}")
         return {'message': 'Error al obtener los productos por categoria'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def StatusOfUsers():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         selected_query = """
@@ -154,10 +162,14 @@ def StatusOfUsers():
     except Exception as e:
         print(f"Error al obtener el estado de los usuarios: {e}")
         return {'message': 'Error al obtener el estado de los usuarios'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def SalesForUsers():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         selected_query = """
@@ -205,10 +217,14 @@ def SalesForUsers():
     except Exception as e:
         print(f"Error: {e}")
         return {'message': 'Error al obtener el total gastado por usuarios'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def ProductInventory():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         selected_query = """
@@ -249,10 +265,14 @@ def ProductInventory():
     except Exception as e:
         print(f"Error: {e}")
         return {'message': 'Error al obtener el inventario de los productos'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def OrderStatus():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         selected_query = """
@@ -295,10 +315,14 @@ def OrderStatus():
     except Exception as e:
         print(f"Error: {e}")
         return {'message': 'Error al obtener el estado de las ordenes'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def IssuedBills():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         selected_query = """
@@ -349,10 +373,14 @@ def IssuedBills():
     except Exception as e:
         print(f"Error: {e}")
         return {'message': 'Error al obtener las facturas por usuario'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
 
 def MonthlyIncome():
     try:
-        connection = current_app.mysql_connection
+        connection = get_db_connection()
         cursor = connection.cursor()
 
         selected_query = """
@@ -395,3 +423,7 @@ def MonthlyIncome():
     except Exception as e:
         print(f"Error: {e}")
         return {'message': 'Error al obtener los ingresos'}, 500
+    
+    finally:
+        if cursor:
+            cursor.close()
