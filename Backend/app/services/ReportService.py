@@ -1,4 +1,5 @@
 from app import get_db_connection
+from datetime import datetime
 
 def SaleByProduct():
     try:
@@ -349,10 +350,14 @@ def IssuedBills():
         # Procesar los resultados
         billList = []
         for row in bills:
+
+            # Convertir fechaEmision al formato colombiano con hora, minutos y segundos
+            issued_date = row[2].strftime('%d/%m/%Y %H:%M:%S') if isinstance(row[2], datetime) else row[2]
+
             billList.append({
                 'BillId': row[0],                  
                 'NickName': row[1],
-                'IssuedDate': row[2],
+                'IssuedDate': issued_date,
                 'Total': row[3]
             })
 

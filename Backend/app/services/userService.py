@@ -9,15 +9,15 @@ def CreateUser(userData):
         # Convertir los datos recibidos en un objeto User
         user = User(
             id=None,
-            firstName=userData['FirstName'],
-            lastName=userData['LastName'],
-            nickName=userData['NickName'],
-            password=userData['Password'],
-            email=userData['Email'],
-            address=userData['Address'],
-            phoneNumber=str(userData['PhoneNumber']),
+            firstName=userData['firstName'],
+            lastName=userData['lastName'],
+            nickName=userData['nickName'],
+            password=userData['password'],
+            email=userData['email'],
+            address=userData['address'],
+            phoneNumber=str(userData['phoneNumber']),
             creationDate=None,
-            active=userData['Active']
+            active=1
         )
 
         connection = get_db_connection()
