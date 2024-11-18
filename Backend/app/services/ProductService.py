@@ -2,24 +2,42 @@ from app import get_db_connection
 
 def CreateProduct(data):
     try:
+        # Obtener la conexión a la base de datos
         connection = get_db_connection()
         cursor = connection.cursor()
 
         # Consulta SQL para insertar un producto
-        insert_query = """INSERT INTO productos
-                          (nombre, idCategoria, idMarca, precio, stock, descripcion, activo) 
-                          VALUES (%s, %s, %s, %s, %s, %s, %s)"""
-        cursor.execute(insert_query, (data['name'], data['categoryId'], data['brandId'], data['price'], data['stock'], data['description'], 1))
+        insert_product_query = """
+            INSERT INTO productos (nombre, idCategoria, idMarca, precio, stock, descripcion, activo) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """
+        product_values = (data['name'], data['categoryId'], data['brandId'], data['price'], data['stock'], data['description'], 1)
+        cursor.execute(insert_product_query, product_values)
 
-        connection.commit()  # Guarda los cambios
-        cursor.close()
+        # Obtener el ID del producto recién creado
+        product_id = cursor.lastrowid
 
-        return {'message': 'Producto creada exitosamente'}, 201
+        # Consulta SQL para crear un espacio de imagen asociado al producto
+        insert_image_query = """
+            INSERT INTO imagenes_producto (idProducto, url) 
+            VALUES (%s, %s)
+        """
+        # `url` inicialmente será un valor por defecto (por ejemplo, vacío o un marcador)
+        image_values = (product_id, data['image'])
+        cursor.execute(insert_image_query, image_values)
+
+        # Confirmar los cambios en la base de datos
+        connection.commit()
+
+        return {'message': 'Producto creado exitosamente.'}, 201
+
     except Exception as e:
+        # Registrar el error para depuración
         print(f"Error al crear el producto: {e}")
         return {'message': 'Error al crear el producto'}, 500
-    
+
     finally:
+        # Cerrar el cursor y la conexión de forma segura
         if cursor:
             cursor.close()
 
